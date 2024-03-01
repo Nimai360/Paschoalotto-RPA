@@ -1,0 +1,12 @@
+{
+    "websiteUrl": "https://10fastfingers.com/typing-test/portuguese",
+    "listaPalavras_id": "wordlist",
+    "inputField_id": "inputfield",
+    "resultPanel_id": "result-table",
+    "resultWpm_id": "wpm",
+    "resultKeystrokes_id": "keystrokes",
+    "resultAccuracy_id": "accuracy",
+    "resultCorrect_id": "correct",
+    "resultWrong_id": "wrong",
+    "decline_cookies": "CybotCookiebotDialogBodyButtonDecline"
+}

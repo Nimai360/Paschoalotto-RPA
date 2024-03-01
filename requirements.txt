@@ -1,0 +1,8 @@
+Selenium.Support
+Selenium.WebDriver
+Selenium.WebDriver.ChromeDriver
+SeleniumExtras.WaitHelpers
+WebDriverManager
+HtmlAgilityPack
+Npgsql
+DotEnv.net
