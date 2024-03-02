@@ -33,7 +33,7 @@ namespace Paschoalotto_RPA
                             {json.GetProperty("keystrokes")}, 
                             {json.GetProperty("accuracy")}, 
                             {json.GetProperty("correct_word")}, 
-                            {json.GetProperty("wrong_word")});", 
+                            {json.GetProperty("wrong_word")});",
                     connection))
                     {
 

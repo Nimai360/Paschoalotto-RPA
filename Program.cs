@@ -47,23 +47,26 @@ namespace Paschoalotto_RPA
         public void FastFingersWebScraper(WebDriverUtils webDriver)
         {
             FastFingers fastFingers = new(webDriver);
-            
             fastFingers.GoToHomePage();
             fastFingers.AcceptCookies();
 
+            Console.WriteLine($"[{DateTime.Now}] Vamos iniciar o RPA");
             string[] list = fastFingers.GetWordsList(fastFingers.GetElementWordsList());
             IWebElement inputField = fastFingers.GetElementInputField();
 
+            DateTime agora = DateTime.Now;
             foreach (string word in list)
             {
                 fastFingers.InsertWord(inputField, word);
             }
-            fastFingers.CloseAlert();
+            Console.WriteLine($"[{DateTime.Now}] Terminado de inserir as palavras");
+            fastFingers.CloseAlert((int)(DateTime.Now - agora).TotalSeconds + 1);
 
             JsonElement results = fastFingers.GetResults();
 
             dbPostgres ??= new();
             dbPostgres.InsertResults(results);
+            Console.WriteLine($"[{DateTime.Now}] RPA Finalizado");
         }
 
         private static void Exit()

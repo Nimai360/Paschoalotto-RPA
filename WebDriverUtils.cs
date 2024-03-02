@@ -180,12 +180,16 @@ namespace Paschoalotto_RPA
                 driver.ExecuteJavaScript("arguments[0].scrollIntoView(true);", element);
             }
         }
-        public void CloseAlert()
+        public void CloseAlert(int timeWait)
         {
-            var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(60));
-            wait.Until(ExpectedConditions.AlertIsPresent());
-            IAlert alert = driver.SwitchTo().Alert();
-            alert.Accept();
+            try
+            {
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(timeWait));
+                wait.Until(ExpectedConditions.AlertIsPresent());
+                IAlert alert = driver.SwitchTo().Alert();
+                alert.Accept();
+            }
+            catch (Exception) { }
         }
 
         public IWebDriver ConfigDriver()
@@ -204,11 +208,17 @@ namespace Paschoalotto_RPA
         "--log-level=3",
         "--mute-audio",
         "--incognito",
-        //"--headless" // Adicionar para não ter que carregar a parte gráfica, e assim otimizar o tempo
+        //"--headless",
+        "--disable-gpu"
     ]);
-            chromeOptions.AddExcludedArgument("enable-automation"); // remove mensagem de navegador de automação
+            // remove mensagem de navegador de automação
+            chromeOptions.AddExcludedArgument("enable-automation");
 
-            return new ChromeDriver(chromeOptions);
+            // Cria o serviço do ChromeDriver (opcional para ocultar a janela do comando)
+            var service = ChromeDriverService.CreateDefaultService();
+            service.HideCommandPromptWindow = true;
+
+            return new ChromeDriver(service, chromeOptions);
         }
 
         // Atualiza o webdriver para a versão mais recente

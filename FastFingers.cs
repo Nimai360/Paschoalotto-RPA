@@ -17,12 +17,19 @@ namespace Paschoalotto_RPA
             this.webDriverUtils = webDriverUtils;
         }
 
-        public void AcceptCookies() => webDriverUtils.FindElement(TypePath.ID, json.GetProperty("decline_cookies").GetString(), scrollElementTo: "none")?.Click();
+        public void AcceptCookies()
+        {
+            try
+            {
+                webDriverUtils.FindElement(TypePath.ID, json.GetProperty("decline_cookies").GetString(), scrollElementTo: "none")?.Click();
+            }
+            catch (Exception) { }
+        }
 
         public IWebElement GetElementWordsList() => webDriverUtils.FindElement(TypePath.ID, json.GetProperty("listaPalavras_id").GetString(), waitUntilVisible: false, scrollElementTo: "none");
-        
+
         public IWebElement GetElementInputField() => webDriverUtils.FindElement(TypePath.ID, json.GetProperty("inputField_id").GetString(), scrollElementTo: "none");
-        
+
         public IWebElement GetResultsPanel() => webDriverUtils.FindElement(TypePath.ID, json.GetProperty("resultPanel_id").GetString(), waitUntilVisible: true, scrollElementTo: "top");
 
         public string[] GetWordsList(IWebElement elemList) => GetWordsFromHtmlElement(elemList).Trim().Split("|");
@@ -38,8 +45,7 @@ namespace Paschoalotto_RPA
             webDriverUtils.SendKeys(inputField, word, clearBefore: true);
             webDriverUtils.SendKeys(inputField, Keys.Space);
         }
-        public void CloseAlert() => webDriverUtils.CloseAlert();
-
+        public void CloseAlert(int timeWait) => webDriverUtils.CloseAlert(timeWait);
         public JsonElement GetResults() => GetJsonResults(GetResultsPanel().GetAttribute("outerHTML"));
 
         private JsonElement GetJsonResults(string elem)
